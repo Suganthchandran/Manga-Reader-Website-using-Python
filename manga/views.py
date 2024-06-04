@@ -25,6 +25,7 @@ def genreview(request,name):
     
 def manga_details(request,cname,mname):
     if(Genre.objects.filter(name=cname,status=0)):
+        # mname = mname.replace('-', ' ')
         if(Mangas.objects.filter(name=mname,status=0)):
             comics = Mangas.objects.filter(name=mname,status=0).first()
             return render(request,"manga/comics/manga_details.html",{"comics":comics})

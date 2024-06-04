@@ -87,10 +87,48 @@
         font-weight: 700;
         color: rgb(0, 0, 0);
     }
+
+
+    .container{
+            margin: 9% 5%;
+        }
+
+
+                /* Back Button */
+        
+.back{
+    margin-bottom: 3rem;
+}
+
+a{
+    display: flex;
+    flex-direction: row;
+    color: var(--bg-color);
+}
+
+a i{
+    margin-left: 0rem;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+a h3{
+    margin-left: 1rem;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
     </style>
 </head>
 <body>
     {% include 'manga/inc/Navbar.html' %}
+    <div class="container">
+        <div class="back">
+            <a href="{% url 'genre'%}">
+            <i class="fa-solid fa-backward"></i>
+            <h3>Back</h3>
+            </a>
+        </div>
     <div>
         <h1>{{genre_name}}</h1>
     </div>
@@ -106,5 +144,6 @@
         </li>
         {% endfor %}
     </ul>
+    </div>
 </body>
 </html>

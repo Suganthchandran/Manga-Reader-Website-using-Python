@@ -5,10 +5,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="{% static 'CSS/style.css' %}">
+    <style>
+        .container{
+            margin: 8% 5%;
+        }
+
+        /* Back Button */
+        .back{
+            margin-bottom: 3rem;
+        }
+
+        a{
+            display: flex;
+            flex-direction: row;
+            color: var(--bg-color);
+        }
+
+        a i{
+            margin-left: 0rem;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        a h3{
+            margin-left: 1rem;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .pdf-files{
+            margin-top: 2rem;
+        }
+
+        .pdf-file{
+            margin-bottom: 1rem;
+        }
+    </style>
 </head>
 <body>
-    <h1>{{comics}}</h1>
-    <h1>{{comics.description}}</h1>
-    <img src="{{ comics.banner_image.url }}" alt="Psychopomp" />
+    {% include 'manga/inc/Navbar.html' %}
+    <div class="container">
+        <div class="back">
+            <a href="{% url 'genre' comics.genre.name %}">
+                <i class="fa-solid fa-backward"></i>
+                <h3>Back</h3>
+            </a>
+        </div>
+        <h1>{{ comics }}</h1>
+        <h1>{{ comics.description }}</h1>
+        <img src="{{ comics.banner_image.url }}" alt="Psychopomp" />
+
+        <!-- Display PDF files -->
+        <div class="pdf-files">
+            <h2>PDF Files</h2>
+            {% for pdf in comics.pdf_files.all %}
+                <div class="pdf-file">
+                    <a href="{{ pdf.file.url }}" target="_blank">{{ pdf.file.name}}</a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 </body>
 </html>
