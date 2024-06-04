@@ -25,6 +25,7 @@ class Mangas(models.Model):
     japanese_name = models.CharField(max_length=250,null=False,blank=False)
     author = models.CharField(max_length=150,null=False,blank=False)
     manga_image = models.ImageField(upload_to=getFileName,null=True,blank=True)
+    banner_image = models.ImageField(upload_to=getFileName,null=True,blank=True)
     work_status = models.BooleanField(default=False,help_text="0-ongoing , 1-Completed")
     tot_chapters = models.IntegerField(null=False,blank=False)
     description = models.TextField(max_length=500,null=False,blank=False)
