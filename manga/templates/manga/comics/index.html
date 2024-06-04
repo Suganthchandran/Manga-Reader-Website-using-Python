@@ -97,7 +97,7 @@
     <ul class="card-list">
         {% for item in comics %}
         <li class="card">
-            <a class="card-image" href="{% url 'genre' item.name %}">
+            <a class="card-image" href="{% url 'manga_details' genre_name item.name %}">
                 <img src="{{ item.manga_image.url }}" alt="Psychopomp" />
             </a>
             <a class="card-description" href="{% url 'genre' item.name %}">

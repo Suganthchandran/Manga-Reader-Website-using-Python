@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from . models import *
 from django.contrib import messages
+from django.shortcuts import redirect
 
 # Create your views here.
 
@@ -21,3 +22,16 @@ def genreview(request,name):
     else:
         messages.warning(request,"No such Genre Found")
         return redirect('genre')
+    
+def manga_details(request,cname,mname):
+    if(Genre.objects.filter(name=cname,status=0)):
+        if(Mangas.objects.filter(name=mname,status=0)):
+            comics = Mangas.objects.filter(name=mname,status=0).first()
+            return render(request,"manga/comics/manga_details.html",{"comics":comics})
+        else:
+            messages.error(request,'No Such Manga Found')
+            return redirect('genre')
+    else:
+        messages.error(request,'No Such Genre Found')
+        return render('genre')
+

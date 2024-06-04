@@ -12,6 +12,7 @@ def getFileName(request,FileName):
 class Genre(models.Model):
     name = models.CharField(max_length=150,null=False,blank=False)
     image = models.ImageField(upload_to=getFileName,null=True,blank=True)
+    genre_description = models.TextField(max_length=500,null=True,blank=True)
     status = models.BooleanField(default=False,help_text="0-show , 1-Hidden")
     created_at = models.DateTimeField(auto_now_add=True)
 
