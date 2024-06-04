@@ -29,7 +29,16 @@ class Mangas(models.Model):
     description = models.TextField(max_length=500,null=False,blank=False)
     status = models.BooleanField(default=False,help_text="0-show , 1-Hidden")
     trending = models.BooleanField(default=False,help_text="0-default , 1-trending")
+    recommend = models.BooleanField(default=False,help_text="0-default , 1-recommend")
     created_at = models.DateTimeField(auto_now_add=True)
+    pdf_files = models.ManyToManyField('PDFFile', blank=True)
 
-    def __str__(self)   :
+    def __str__(self):
         return self.name
+
+class PDFFile(models.Model):
+    file = models.FileField(upload_to='pdf_files/')
+
+    def __str__(self):
+        return self.file.name
+   
