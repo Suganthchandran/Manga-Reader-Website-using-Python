@@ -6,7 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Genre</title>
     <link rel="stylesheet" href="{% static 'CSS/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+
+    body{
+            background-color: black;
+        }
+
         .card-image {
         display: block;
         min-height: 20rem;
@@ -43,6 +49,7 @@
         font-size: 1rem;
         text-decoration: none;
         overflow: hidden;
+        background-color: rgb(40, 40, 40);
         box-shadow: 0 0 3rem -1rem rgba(0,0,0,0.5);
         transition: transform 0.1s ease-in-out, box-shadow 0.1s;
     }
@@ -64,7 +71,7 @@
     .card-description {
         display: block;
         padding: 1em 0.5em;
-        color: #515151;
+        color: white;
         text-decoration: none;
     }
 
@@ -77,15 +84,16 @@
 
     .card-description > p {
         margin: 0;
-    }
+    }   
 
-    h1 {
-        margin-top: 7%;
-        margin-left: 5%;
-        margin-bottom: 3%;
-        font-size: 4rem;
+     h1 {
+        margin-top: -6%;
+        margin-bottom: 1.8%;
+        font-size: 4.5rem;
+        font-style: italic;
         font-weight: 700;
-        color: rgb(0, 0, 0);
+        color:white;
+        text-align: center;
     }
 
 
@@ -103,13 +111,15 @@
 a{
     display: flex;
     flex-direction: row;
-    color: var(--bg-color);
+    color: white;
 }
 
 a i{
     margin-left: 0rem;
     font-size: 2rem;
     font-weight: 700;
+    color: white;
+
 }
 
 a h3{
@@ -125,7 +135,7 @@ a h3{
     <div class="container">
         <div class="back">
             <a href="{% url 'genre'%}">
-            <i class="fa-solid fa-backward"></i>
+                <i class="fa-solid fa-backward"></i>
             <h3>Back</h3>
             </a>
         </div>
@@ -138,7 +148,7 @@ a h3{
             <a class="card-image" href="{% url 'manga_details' genre_name item.name %}">
                 <img src="{{ item.manga_image.url }}" alt="Psychopomp" />
             </a>
-            <a class="card-description" href="{% url 'genre' item.name %}">
+            <a class="card-description" href="{% url 'manga_details' genre_name item.name %}">
                 <h2>{{item.name}}</h2>
             </a>
         </li>

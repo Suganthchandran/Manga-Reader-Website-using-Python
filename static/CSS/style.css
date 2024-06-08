@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 /* Common */
 
@@ -10,7 +10,7 @@
     border: none;
     outline: none;
     scroll-behavior: smooth;
-    font-family: 'Nunito', sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 ::selection {
@@ -20,7 +20,7 @@
 
 /* Assigning colors to variables */
 :root {
-    --bg-color: #171F38;
+    --bg-color: #000;
     --snd-bf-color: #262840;
     --text-color: #fff;
     --main-color: #5982f4;
@@ -33,6 +33,7 @@ html {
 
 body{
     font-family: "Nunito Sans", sans-serif;
+    background-color: #000;
 }
 
 span{
@@ -58,7 +59,7 @@ span{
 #header-name {
     font-size: 3.2rem;
     font-weight: 700;
-    color: var(--text-color);
+    color: black;
     cursor: default;
 }
 
@@ -67,7 +68,7 @@ span{
 }
 
 .navbar a {
-    color: var(--text-color);
+    color: black;
     font-size: 1.78rem;
     margin-left: 4rem;
     font-weight: 700;

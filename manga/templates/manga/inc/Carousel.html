@@ -1,66 +1,3 @@
-<!-- <!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body>
-{% load static %}
-
-<div class="slideshow-container">
-
-<div class="mySlides fade">
-  <div class="numbertext">1 / 3</div>
-  <img src="{% static 'Images/hail.jpg' %}" style="width:100%">
-  <div class="text">Caption Text</div>
-</div>
-
-<div class="mySlides fade">
-  <div class="numbertext">2 / 3</div>
-  <img src="{% static 'Images/hail.jpg' %}" style="width:100%">
-  <div class="text">Caption Two</div>
-</div>
-
-<div class="mySlides fade">
-  <div class="numbertext">3 / 3</div>
-  <img src="{% static 'Images/hail.jpg' %}" style="width:100%">
-  <div class="text">Caption Three</div>
-</div>
-
-</div>
-<br>
-
-<div style="text-align:center">
-  <span class="dot"></span> 
-  <span class="dot"></span> 
-  <span class="dot"></span> 
-</div>
-
-<script>
-let slideIndex = 0;
-showSlides();
-
-function showSlides() {
-  let i;
-  let slides = document.getElementsByClassName("mySlides");
-  let dots = document.getElementsByClassName("dot");
-  for (i = 0; i < slides.length; i++) {
-    slides[i].style.display = "none";  
-  }
-  slideIndex++;
-  if (slideIndex > slides.length) {slideIndex = 1}    
-  for (i = 0; i < dots.length; i++) {
-    dots[i].className = dots[i].className.replace(" active", "");
-  }
-  slides[slideIndex-1].style.display = "block";  
-  dots[slideIndex-1].className += " active";
-  setTimeout(showSlides, 5000); // Change image every 2 seconds
-}
-</script>
-
-</body>
-</html> -->
-
-
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -107,25 +44,38 @@ function showSlides() {
       position: absolute;
       top: 0;
       left: 0;
-      width: 50%;
+      width: 100%;
       height: 100%;
-      background: linear-gradient(to right, rgba(0, 0, 0, 0.8), transparent);
+      background: linear-gradient(to right,#000, rgba(0, 0, 0, 0.676), transparent);
       z-index: 1;
     }
     .carousel-caption {
       position: absolute;
-      bottom: 20%;
-      left: 10%;
+      display: flex;
+      flex-direction: column;
+      justify-content: left;
+      align-items: left;
+      width:40%;
+      bottom: 25%;
+      left: 5%;
       z-index: 2;
       color: #fff;
       text-align: left;
     }
     .carousel-caption h5 {
-      font-size: 2.5em;
+      font-size: 3.3em;
       font-weight: bold;
+      margin-bottom: 0.8rem;
     }
     .carousel-caption p {
+      font-size: 1.5em;
+    }
+
+    .carousel-caption h6{
       font-size: 1.2em;
+      margin-bottom: 1.3rem;
+      color:#cb8e00;
+      font-weight: 400px;
     }
     .nav-buttons {
       position: absolute;
@@ -149,6 +99,30 @@ function showSlides() {
       text-align: center;
       padding: 20px;
     }
+
+    #btn {
+  background-color: #4b0d5e;
+  border-radius: 100px;
+  color: white;
+  cursor: pointer;
+  display: inline-block;
+  font-family: CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif;
+  padding: 7px 20px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 250ms;
+  border: 0;
+  margin-top: 2.5rem;
+  width: 20%;
+  font-size: 16px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+#btn:hover {
+  transform: scale(1.05) rotate(-1deg);
+}
   </style>
 </head>
 <body>
@@ -158,72 +132,91 @@ function showSlides() {
     <div class="carousel-item active">
       <img src="{% static 'Images/One_Piece.jpg' %}" alt="Slide 1">
       <div class="carousel-caption">
-        <p>Additional Text 1</p>
-        <h5>Slide 1 Title</h5>
-        <p>Slide 1 Description</p>
+        <h6>#1 Spotlight</h6>
+        <h5>One Piece</h5>
+        <p>Gold Roger was known as the "Pirate King," the strongest and most infamous being to have sailed the Grand Line. The capture and execution of Roger by the World Government brought a change throughout the world. His last words before his death revealed the existence of the greatest treasure in the world, One Piece.</p>
+        <button id="btn">Read Now</button>
       </div>
     </div>
     <div class="carousel-item">
       <img src="{% static 'Images/Jujutsu_Kaisen.jpg' %}" alt="Slide 2">
       <div class="carousel-caption">
-        <h5>Slide 2 Title</h5>
-        <p>Slide 2 Description</p>
+        <h6>#2 Spotlight</h6>
+        <h5>Jujutsu Kaisen</h5>
+        <p>High schooler Yuuji Itadori spends his days at either the clubroom or the hospital, where he visits his bedridden grandfather. Yuuji finds himself suddenly thrust into the world of Curses—dreadful beings and swallowing an item, revealed to be a finger belonging to the demon Sukuna Ryoumen, the "King of Curses." Yuuji experiences first-hand the threat these Curses pose to society as he discovers his own newfound powers.</p>
+        <button id="btn">Read Now</button>
       </div>
     </div>
     <div class="carousel-item">
       <img src="{% static 'Images/Dragonball.jpg' %}" alt="Slide 3">
       <div class="carousel-caption">
-        <h5>Slide 3 Title</h5>
-        <p>Slide 3 Description</p>
+        <h6>#3 Spotlight</h6>
+        <h5>Dragon Ball Super</h5>
+        <p>Seven years after the events of Dragon Ball Z, A sleeping evil awakens in the dark reaches of the galaxy: Beerus, the ruthless God of Destruction. Disturbed by a prophecy that he will be defeated by a "Super Saiyan God," Beerus and his angelic attendant Whis start searching the universe for this mysterious being. Before long, they reach Earth where they encounter SON-Goku, one of the planet's mightiest warriors, and his similarly powerful friends.</p>
+        <button id="btn">Read Now</button>
       </div>
     </div>
     <div class="carousel-item">
       <img src="{% static 'Images/Bluelock.jpg' %}" alt="Slide 4">
       <div class="carousel-caption">
-        <h5>Slide 4 Title</h5>
-        <p>Slide 4 Description</p>
+        <h6>#4 Spotlight</h6>
+        <h5>Blue Lock</h5>
+        <p>Yoichi Isagi was mere moments away from scoring a goal that would have sent his high school soccer team to the nationals, but a split-second decision to pass the ball to his teammate cost him that reality. Bitter, confused, and disappointed, When Isagi returns home, an invitation from the Japan Football Union awaits him. Through an arbitrary and biased decision-making process, Isagi is one of three hundred U-18 strikers selected for a controversial project named Blue Lock. </p>
+        <button id="btn">Read Now</button>
       </div>
     </div>
     <div class="carousel-item">
       <img src="{% static 'Images/Vinland_Saga.jpg' %}" alt="Slide 5">
       <div class="carousel-caption">
-        <h5>Slide 5 Title</h5>
-        <p>Slide 5 Description</p>
+        <h6>#5 Spotlight</h6>
+        <h5>Vinland Saga</h5>
+        <p>Young Thorfinn grew up listening to the stories of old sailors that had traveled the ocean and reached the place of legend, Vinland. It's said to be warm and fertile, a place where there would be no need for fighting—not at all like the frozen village in Iceland where he was born, and certainly not like his current life as a mercenary. Though his father once told him, "You have no enemies, nobody does. There is nobody who it's okay to hurt," as he grew, Thorfinn knew that nothing was further from the truth.</p>
+        <button id="btn">Read Now</button>
       </div>
     </div>
     <div class="carousel-item">
-      <img src="{% static 'Images/Windbreaker.jpg' %}" alt="Slide 6">
+      <img src="{% static 'Images/Windbreaker_banner.jpg' %}" alt="Slide 6">
       <div class="carousel-caption">
-        <h5>Slide 6 Title</h5>
-        <p>Slide 6 Description</p>
+        <h6>#6 Spotlight</h6>
+        <h5>Wind Breaker</h5>
+        <p>Haruka Sakura wants nothing to do with weaklings—he's only interested in the strongest of the strong. He's just started at Furin High School, a school of degenerates known only for their brawling strength—strength they use to protect their town from anyone who wishes it ill. But Haruka's not interested in being a hero or being part of any sort of team—he just wants to fight his way to the top! </p>
+        <button id="btn">Read Now</button>
       </div>
     </div>
     <div class="carousel-item">
       <img src="{% static 'Images/One_Punch_Man.jpg' %}" alt="Slide 7">
       <div class="carousel-caption">
-        <h5>Slide 7 Title</h5>
-        <p>Slide 7 Description</p>
+        <h6>#7 Spotlight</h6>
+        <h5>One Punch Man</h5>
+        <p>The seemingly ordinary and unimpressive Saitama has a rather unique hobby: being a hero. In order to pursue his childhood dream, he trained relentlessly for three years—and lost all of his hair in the process. Now, Saitama is incredibly powerful, so much so that no enemy is able to defeat him in battle. In fact, all it takes to defeat evildoers with just one punch.</p>
+        <button id="btn">Read Now</button>
       </div>
     </div>
     <div class="carousel-item">
       <img src="{% static 'Images/My_Dress_up_Darling.jpg' %}" alt="Slide 8">
       <div class="carousel-caption">
-        <h5>Slide 8 Title</h5>
-        <p>Slide 8 Description</p>
+        <h6>#8 Spotlight</h6>
+        <h5>My Dress up Darling</h5>
+        <p>Traumatized by a childhood incident with a friend who took exception to his love of traditional dolls, doll-artisan hopeful Wakana Gojou passes his days as a loner, finding solace in the home ec room at his high school. To Wakana, people like beautiful Marin Kitagawa, a trendy girl who's always surrounded by a throng of friends, is practically an alien from another world. </p>
+        <button id="btn">Read Now</button>
       </div>
     </div>
     <div class="carousel-item">
       <img src="{% static 'Images/Kingdom_of_Ruin.jpg' %}" alt="Slide 9">
       <div class="carousel-caption">
-        <h5>Slide 9 Title</h5>
-        <p>Slide 9 Description</p>
+        <h6>#9 Spotlight</h6>
+        <h5>The Kingdoms of Ruin</h5>
+        <p>For ages, humanity flourished through the power of magic, a gift from witches to aid mankind. But times have changed. The scientific Gear Expansion has made both magic and witches obsolete. In order to liberate humanity from the blight of magic, the mighty Redia Empire began a ruthless hunt to exterminate all witches. Adonis was only a boy when the hunt began, apprentice to a witch he dearly loved. When she perishes at the hands of the empire, Adonis vows revenge</p>
+        <button id="btn">Read Now</button>
       </div>
     </div>
     <div class="carousel-item">
       <img src="{% static 'Images/Kaiju.png' %}" alt="Slide 10">
       <div class="carousel-caption">
-        <h5>Slide 10 Title</h5>
-        <p>Slide 10 Description</p>
+        <h6>#10 Spotlight</h6>
+        <h5>Kaiju No.8</h5>
+        <p>Grotesque, Godzilla-like monsters called "kaijuu" have been appearing around Japan for many years. To combat these beasts, an elite military unit known as the Defense Corps risks their lives daily to protect civilians. Once a creature is killed, "sweepers"—working under the Professional Kaijuu Cleaner Corporation—are left to dispose of its remains. Kafka Hibino, a 32-year-old man, is unsatisfied with his job as a sweeper.</p>
+        <button id="btn">Read Now</button>
       </div>
     </div>
   </div>
@@ -255,7 +248,7 @@ function moveSlide(n) {
 
 document.addEventListener('DOMContentLoaded', (event) => {
   showSlides(slideIndex);
-  setInterval(() => { moveSlide(1); }, 2000); // Change image every 5 seconds
+  setInterval(() => { moveSlide(1); }, 3000); // Change image every 5 seconds
 });
 </script>
 
