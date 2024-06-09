@@ -7,7 +7,7 @@
     <title>Genre</title>
     <link rel="stylesheet" href="{% static 'CSS/style.css' %}">
     <style>
-
+      
     body{
             background-color: black;
         }
@@ -32,8 +32,8 @@
 
     .card-list {
         display: block;
-        margin: 1rem auto;
-        padding: 2rem 9%;
+        margin: 5rem auto;
+        padding: 2rem 3%;
         font-size: 0;
         text-align: center;
         list-style: none;
@@ -42,12 +42,14 @@
     .card {
         display: inline-block;
         width: 100%;
-        max-width: 22rem;
-        height: 28rem;
+        max-width: 23rem;
+        border-radius: 20px;
+        height: 33.4rem;
         margin: 0 3rem 5rem 3rem;
         font-size: 1rem;
         text-decoration: none;
         overflow: hidden;
+        background-color: rgb(40, 40, 40);
         box-shadow: 0 0 3rem -1rem rgba(0,0,0,0.5);
         transition: transform 0.1s ease-in-out, box-shadow 0.1s;
     }
@@ -69,7 +71,7 @@
     .card-description {
         display: block;
         padding: 1em 0.5em;
-        color: #515151;
+        color: white;
         text-decoration: none;
     }
 
@@ -77,20 +79,27 @@
         margin: 0.8rem 0 0 0;
         font-weight: 700;
         font-size: 2rem;
-        transition: margin-top 0.1s ease-in-out; /* Added transition for smooth effect */
+        transition: margin-top 0.1s ease-in-out; 
     }
 
     .card-description > p {
         margin: 0;
     }   
 
-    h1 {
+     h1 {
         margin-top: 7%;
         margin-left: 5%;
         margin-bottom: 3%;
         font-size: 4rem;
         font-weight: 700;
-        color: rgb(0, 0, 0);
+        color: rgb(255, 255, 255);
+    }
+
+    h4{
+        text-align: center;
+        font-size: 3rem;
+        color: white;
+        margin-top: 3%;
     }
 
 
@@ -98,45 +107,51 @@
             margin: 9% 5%;
         }
 
-a{
-    display: flex;
-    flex-direction: row;
-    color: var(--bg-color);
-}
 
-a i{
-    margin-left: 0rem;
-    font-size: 2rem;
-    font-weight: 700;
-}
+    /* Back Button */
+        
+    .back{
+            margin-bottom: 3rem;
+        }
 
-a h2{
-    margin-left: 1rem;
-    font-size: 2rem;
-    font-weight: 700;
-}
+        a{
+            display: flex;
+            flex-direction: row;
+            color: white;
+        }
 
 
-.remove-button {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #dc3545;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
+        a h3{
+            margin-left: 1rem;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        .remove-button {
+            background-color: #4b0d5e;
+            border-radius: 100px;
+            color: white;
             cursor: pointer;
+            display: inline-block;
+            font-family: CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif;
+            padding: 7px 18px;
+            text-align: center;
             text-decoration: none;
+            transition: all 250ms;
+            border: 0;
+            margin-top: 0.3rem;
+            width: 55%;
+            font-weight: 500;
+            font-size: 16px;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
         }
-
         .remove-button:hover {
-            background-color: #c82333;
+            transform: scale(1.05) rotate(-1deg);
         }
-
-        /* Hide the form input */
         .remove-button input {
             display: none;
         }
-
     </style>
 </head>
 <body>
@@ -146,23 +161,27 @@ a h2{
             <h1>Your Library</h1>
         </div>
         <ul class="card-list">
-            {% for item in library %}
-            <li class="card">
-                <a href="{% url 'manga_details' item.book.genre.name item.book.name %}">
-                    <img src="{{ item.book.manga_image.url }}" alt="Manga Image" />
-                </a>
-                <a href="{% url 'manga_details' item.book.genre.name item.book.name %}">
-                    <h2>{{item.book.name}}</h2>
-                </a>
-                <form action="{% url 'remove_manga' item.id %}" method="post" onsubmit="return confirm('Are you sure you want to remove this manga?')">
-                    {% csrf_token %}
-                    <button type="submit" class="remove-button">
-                        Remove
-                        <input type="hidden" name="remove_manga" value="remove" />
-                    </button>
-                </form>
-            </li>
-            {% endfor %}
+            {% if library %}
+                {% for item in library %}
+                    <li class="card">
+                        <a href="{% url 'manga_details' item.book.genre.name item.book.name %}">
+                            <img src="{{ item.book.manga_image.url }}" alt="Manga Image" />
+                        </a>
+                        <a class="card-description" href="{% url 'manga_details' item.book.genre.name item.book.name %}">
+                            <h2>{{ item.book.name }}</h2>
+                        </a>
+                        <form action="{% url 'remove_manga' item.id %}" method="post" onsubmit="return confirm('Are you sure you want to remove this manga?')">
+                            {% csrf_token %}
+                            <button type="submit" class="remove-button">
+                                Remove
+                                <input type="hidden" name="remove_manga" value="remove" />
+                            </button>
+                        </form>
+                    </li>
+                {% endfor %}
+            {% else %}
+                <h4>No Manga in your library.</h4>
+            {% endif %}
         </ul>
     </div>
     <script>
@@ -170,7 +189,6 @@ a h2{
             var alertDisplayed = "{{ alert_displayed|yesno:'true,false' }}";
             if (alertDisplayed === "true") {
                 alert("Manga removed successfully!");
-                // Use fetch to clear the session variable
                 fetch('/clear-alert/', {
                     method: 'POST',
                     headers: {
@@ -179,15 +197,13 @@ a h2{
                     }
                 });
             }
-
             document.querySelectorAll('.remove-button').forEach(button => {
                 button.addEventListener('click', function(event) {
                     const formId = this.parentNode.getAttribute('id');
                     const form = document.getElementById(formId);
                     const alreadySubmitted = form && form.dataset.submitted === 'true';
-
                     if (alreadySubmitted) {
-                        event.preventDefault(); // Prevent form submission
+                        event.preventDefault();
                     } else {
                         if (form) {
                             form.dataset.submitted = 'true';
@@ -199,3 +215,5 @@ a h2{
     </script>
 </body>
 </html>
+
+

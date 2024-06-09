@@ -50,6 +50,7 @@ body{
             border-radius: 0px;
             flex: 0 0 auto;
             width: 20%;
+            border-radius: 20px;
             max-width: 22rem;
             height: 28rem;
             margin: 0 3.5rem;
@@ -283,7 +284,7 @@ body{
                     <div class="recom-cards-description-caption">
                         <h2>{{ item.name }}</h2>
                         <h3>{{item.japanese_name}}</h3>
-                        <p>{{item.description}}</p>
+                        <p>{{item.description|truncatewords_html:45 }}</p>
                     </div>
                     <div class="recom-cards-description-button">
                         <a href="{% url 'manga_details' item.genre.name item.name %}"><button id="btn">Read Now</button></a>
@@ -293,7 +294,7 @@ body{
             {% endfor %}
         </ul>
     </div>
-    <!-- {% include 'manga/inc/footer.html' %} -->
+    {% include 'manga/inc/footer.html' %}
     <script>
         function trendingscrollRight() {
             const cardList = document.querySelector('.trending .cards-list');

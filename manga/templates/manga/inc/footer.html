@@ -1,58 +1,253 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Manga Reader</title>
-  <style>
-    /* Footer Styles */
-    footer {
-      background-color: #333;
-      color: #fff;
-      padding: 20px;
-      text-align: center;
-    }
-    footer a {
-      color: #fff;
-      text-decoration: none;
-    }
-    footer a:hover {
-      text-decoration: underline;
-    }
-    .footer-links {
-      margin-bottom: 20px;
-    }
-    .footer-links ul {
-      list-style: none;
-      padding: 0;
-    }
-    .footer-links ul li {
-      display: inline;
-      margin: 0 10px;
-    }
-    .legal-links {
-      font-size: 12px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Otakuhub Footer</title>
+    <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            emailjs.init("pRIlgnTc2ydAq6G26");
+        })();
+    </script>
+    <style>
+      body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #000;
+    color: #fff;
+}
+
+h2{
+  font-size:3.4rem;
+  margin-bottom: 2rem;
+}
+
+h3{
+  font-size: 2rem;
+}
+
+footer {
+    background-color: #232323;
+    color: #fff;
+    padding:3rem 12%;
+    position: relative;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    /* max-height: 200px; */
+
+}
+
+.manga-suggest {
+    flex: 1;
+    min-width: 400px;
+    margin:0.1px 50px 10px 10px;
+}
+
+.quick-links{
+  flex: 1;
+    min-width: 200px;
+    margin: 10px 10px 10px 120px;
+}
+
+.get-in-touch{
+  margin-right:240px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  flex: 1;
+    min-width: 200px;
+}
+
+.manga-suggest h2, .quick-links h3, .get-in-touch h3 {
+    margin-top: 0;
+    margin-bottom: 3rem;
+}
+
+.manga-suggest form {
+    display: flex;
+    flex-direction: column;
+    margin-top: -4%;
+}
+
+.manga-suggest form input, form textarea {
+    margin-bottom: 10px;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 5px;
+    width: 100%;
+    background-color: #000;
+    color: white;
+}
+
+.manga-suggest input::placeholder,
+.manga-suggest textarea::placeholder{
+    color: white;
+}
+
+.manga-suggest form button {
+    border: none;
+    cursor: pointer;
+    margin-left: 33%; 
+    margin-top: 0.6rem;
+    background-color: #4b0d5e;
+  border-radius: 100px;
+  color: white;
+  cursor: pointer;
+  display: inline-block;
+  font-family: CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif;
+  padding: 7px 20px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 250ms;
+  border: 0;
+  width: 27%;
+  font-size: 16px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.manga-suggest form button:hover {
+    transform: scale(1.05) rotate(-1deg);
+}
+
+.quick-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+.quick-links ul li {
+    margin-bottom: 10px;
+}
+
+.quick-links ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.get-in-touch pre {
+    margin-bottom: 1rem;
+}
+
+.get-in-touch a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.social-media {
+    text-align: center;
+    margin: 15px 0;
+}
+
+.social-media img{
+  width: 28px;
+  height: 28px;
+  object-fit: cover;
+}
+
+.social-media a {
+    margin: 0 10px;
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #333;
+    padding-top: 10px;
+}
+
+.footer-bottom pre {
+    margin-top: 1rem;
+    position: absolute;
+    left: 45%;
+    text-align: center;
+}
+
+.footer-image {
+  position: absolute;
+  top: 0%;
+  right: 3%;
+  background-color: #232323;
+    width: 380px;
+    height: 300px;
+    border-radius: 5px;
+    object-fit:cover;
+}
+
+    </style>
 </head>
 <body>
-  <footer>
-    <div class="footer-links">
-      <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">About Us</a></li>
-        <li><a href="#">Contact Us</a></li>
-      </ul>
-    </div>
-    <div class="footer-social">
-      <a href="#"><img src="twitter-icon.png" alt="Twitter"></a>
-      <a href="#"><img src="instagram-icon.png" alt="Instagram"></a>
-      <a href="#"><img src="facebook-icon.png" alt="Facebook"></a>
-    </div>
-    <div class="legal-links">
-      <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a> | <a href="#">DMCA Notice</a>
-    </div>
-    <div>&copy; 2024 Manga Reader. All rights reserved.</div>
-  </footer>
+    <footer>
+        <div class="footer-container">
+            <div class="manga-suggest">
+                <h2>Request a Manga</h2>
+                <form id="contact-form">
+                    <input type="text" id="name" name="name" placeholder="Full Name*" required>
+                    <input type="email" id="email" name="email" placeholder="Email address*" required>
+                    <textarea placeholder="Suggest a Manga*" id="message" name="message" required></textarea>
+                    <button type="submit" class="btn-submit">Request</button>
+                </form>
+            </div>
+            <div class="quick-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms and Conditions</a></li>
+                    <li><a href="#">About US </a></li>
+                </ul>
+            </div>
+            <div class="get-in-touch">
+                <h3>Get in Touch</h3>
+                <pre>Email  :  <a href="mailto:suganthchandran07@gmail.com">suganthchandran07@gmail.com</a></pre>
+                <pre>Phone  :  <a href="tel:9042482004">9042482004</a></pre>
+                <pre>Address  :  2f/746 P&T Colony , America</pre>
+            </div>
+        </div>
+        <div class="social-media">
+            <a href="#"><img src="{% static 'Images/facebook.png' %}" alt="Facebook"></a>
+            <a href="#"><img src="{% static 'Images/instagram.png' %}" alt="Instagram"></a>
+            <a href="#"><img src="{% static 'Images/twitter.png' %}" alt="Twitter"></a>
+            <a href="#"><img src="{% static 'Images/linkedin.png' %}" alt="LinkedIn"></a>
+        </div>
+        <div class="footer-bottom">
+            <pre>&copy; 2024 | OtakuHub | All rights reserved.</pre>
+            <img src="{% static 'Images/mai2.jpg' %}" alt="Footer Image" class="footer-image">
+        </div>
+    </footer>
+    <script>
+function sendEmail(e) {
+    e.preventDefault();
+
+    const firstName = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const message = document.getElementById('message').value;
+
+    const templateParams = {
+        from_name: name,
+        to_name: 'Suganth Chandran',
+        message: message,
+        from_email: email
+    };
+
+    emailjs.send('service_121204', 'template_ojqhwe7', templateParams)
+                .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                    alert('Your message has been sent successfully!');
+                    document.getElementById('contact-form').reset();
+                }, function(error) {
+                    console.log('FAILED...', error);
+                    alert('There was an error sending your message. Please try again later.');
+                });
+        }
+      document.getElementById('contact-form').addEventListener('submit', sendEmail);
+    </script>
 </body>
 </html>
+

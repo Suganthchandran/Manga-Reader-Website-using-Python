@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,112 +8,275 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <style>
- @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
- *{
-    font-family: "Poppins", sans-serif !important;
- }
-
- span{
-    color: white;
-    text-shadow: 2px 2px black;
-    margin-right: 0.2rem;
- }
-
         
- .search-bar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-     flex-grow: 1;
-     margin: 10px 20px;
- }
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-.search-bar input[type="text"] {
-      width: 140%;
-      padding: 10px 20px;;
-       border: none;
-     border-radius: 5px;
-}
+        * {
+            font-family: "Poppins", sans-serif !important;
+        }
+
+        span {
+            color: white;
+            text-shadow: 2px 2px black;
+            margin-right: 0.2rem;
+        }
+
+        .search-bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1;
+            margin: 10px 20px;
+        }
+
+        .search-bar input[type="text"] {
+            width: 140%;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+        }
 
         .header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: 	#4b0d5e;
-    color: white;
-    width: 100%;
-    padding: 1.2rem 9%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 100;
-}
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #4b0d5e;
+            color: white;
+            width: 100%;
+            padding: 1.2rem 9%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
 
-#header-name {
-    font-size: 3.2rem;
-    font-weight: 700;
-    color: black;
-    cursor: default;
-    letter-spacing: 0.2rem;
-}
+        #header-name {
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: black;
+            cursor: default;
+            letter-spacing: 0.2rem;
+        }
 
-.navbar {
-    display: flex;
-}
+        #header-image {
+            display: none;
+            width: 25px;
+            height: 25px;
+        }
 
-.navbar a {
-    color: white;   
-    font-size: 1.78rem;
-    margin-left: 4rem;
-    font-weight: 600;
-    letter-spacing: 0.1rem;
-    position: relative;     
-}
+        .navbar {
+            display: flex;
+        }
 
-.navbar a::before {
-    content: ""; 
-    position: absolute;
-    background-color: #9d1ac5;
-    height: 3px;
-    width: 0;
-    left: 0;
-    bottom: -10px;
-    transition: 0.3s;
-}
+        .navbar a {
+            color: white;
+            font-size: 1.78rem;
+            margin-left: 4rem;
+            font-weight: 600;
+            letter-spacing: 0.1rem;
+            position: relative;
+        }
 
-.navbar a:hover::before {
-    width: 100%;
-}
+        .navbar a::before {
+            content: "";
+            position: absolute;
+            background-color: #9d1ac5;
+            height: 3px;
+            width: 0;
+            left: 0;
+            bottom: -10px;
+            transition: 0.3s;
+        }
 
+        .navbar a:hover::before {
+            width: 100%;
+        }
+
+        #menu-icon {
+            display: none;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        /* 900 px */
+        @media (max-width: 900px) {
+                .search-bar input[type="text"] {
+                    width: 100%;
+                    margin-left: -18%;
+                }
+
+                #menu-icon {
+                    display: block;
+                    margin-right: 2%;
+                    width: 25px;
+                    height: 25px;
+                    cursor: pointer;
+                }
+
+                .header{
+                    padding: 1.2rem 7% !important ;
+                }
+
+                #header-name {
+                    font-size: 2.3rem;
+                }
+
+                .navbar {
+                    display: none;
+                    flex-direction: column;
+                    background-color: #4b0d5e;
+                    width: 100%;
+                    position: absolute;
+                    top: 100%;
+                    left: 0;
+                    padding: 1rem 0;
+                    text-align: center;
+                }
+
+                .navbar a {
+                    margin: 1rem 0;
+                    font-size: 1.5rem;
+                }
+
+                .navbar a::before {
+                    bottom: -5px;
+                }
+
+                .navbar.active {
+                    display: flex;
+                }
+        }
+
+        /* 650 px */
+        @media (max-width: 650px) {
+
+                .header {
+                    padding: 1.2rem 5%;
+                    display: grid;
+                    grid-template-columns: 3fr 8fr 1fr;
+                }
+
+                #header-name {
+                    display: none;
+                }
+
+                #header-image {
+                    display: block;
+                    margin-left: -20%;
+                    margin-bottom: 6px;
+                }
+
+                #header-image img {
+                    width:80px;
+                    height: 40px;
+                }
+
+                .navbar a {
+                    margin-left: 0;
+                    font-size: 1.2rem;
+                }
+
+                .search-bar {
+                    margin: 0;
+                    width: 70%; 
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                .search-bar input[type="text"] {
+                    padding: 5px 10px;
+                    width: 100%; 
+                }
+
+                #menu-icon {
+                    display: block;
+                    margin-right: 3%;
+                    width: 20px;
+                    height: 20px;
+                    cursor: pointer;
+                }
+        }
+
+        /* 1024 px */
+        @media (max-width: 1024px) {
+
+            .header{
+                padding: 1.2rem 4%;
+            }
+
+            #header-name {
+                font-size: 2.5rem;
+                margin-left: 0%;
+            }
+
+            .search-bar {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-grow: 1;
+                margin: 10px 20px;
+            }
+
+            .search-bar input[type="text"] {
+                width: 100%;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+            }
+        }
+
+        /* 1440 px */
+        @media (max-width: 1440px) {
+
+            .search-bar {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-grow: 1;
+                margin: 10px 20px;
+            }
+
+            .search-bar input[type="text"] {
+                width: 120%;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+            }
+        }
 
 
     </style>
 </head>
 <body>
     <header class="header">
+        <a href="{% url 'home' %}" id="header-image"><img src="{% static 'Images/logo2.png' %}" alt="logo"></a>
         <a href="{% url 'home' %}" id="header-name"><span>Otaku</span>hub</a>
         <div class="search-bar">
             <form action="{% url 'search' %}" method="get">
                 <input type="text" name="q" placeholder="Search Manga...">
             </form>
         </div>
-        <i class="fas fa-bars" id="menu-icon"></i> 
+        <img src="{% static 'Images/menu.png' %}" id="menu-icon" alt="logo">
 
         <nav class="navbar">
             <a href="{% url 'home' %}">Home</a>
             <a href="{% url 'library' %}">Library</a>
             <a href="{% url 'genre' %}">Genre</a>
             {% if request.user.is_authenticated %}
-            <a href="#">{{request.user}}</a>
+            <a href="#">{{ request.user }}</a>
             <a href="{% url 'logout' %}">Logout</a>
             {% else %}
             <a href="{% url 'login' %}">Login</a>
             {% endif %}
         </nav>
-        
     </header>
 
-    
+    <script>
+        document.getElementById('menu-icon').addEventListener('click', function() {
+            document.querySelector('.navbar').classList.toggle('active');
+        });
+    </script>
 </body>
 </html>

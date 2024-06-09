@@ -7,8 +7,9 @@
     <title>Document</title>
     <link rel="stylesheet" href="{% static 'CSS/style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
+    
     <style>
+
         .container{
             margin: 6% 9%;
         }
@@ -17,9 +18,9 @@
             background-color: black;
         }
 
-        /* Back Button */
         .back{
-            margin-bottom: 3rem;
+            margin-bottom: 3.5rem;
+            margin-top: 11.5rem;
         }
 
         a{
@@ -30,7 +31,8 @@
 
 
         a h3{
-            margin-left: 1rem;
+            margin-left: 0.8rem;
+            margin-top: -0.4rem;
             font-size: 2rem;
             font-weight: 700;
         }
@@ -48,13 +50,13 @@
         }
 
         .overlay {
-    position: absolute;     
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to top,black, rgba(0,0,0,0.88), rgba(0,0,0,0.5)); /* Vertical black fade effect */
-}
+            position: absolute;     
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top,black, rgba(0,0,0,0.88), rgba(0,0,0,0.5)); /* Vertical black fade effect */
+        }
 
         .manga_content{
             position: absolute;
@@ -76,7 +78,6 @@
         .manga-right{
             display: flex;
             flex-direction: column;
-            /* justify-content: space-around; */
         }
 
         .manga-right-content{
@@ -103,9 +104,9 @@
         {
             margin-left: 5rem;
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             align-items: center;
-            gap:4px;
+            gap:150px;
             position: absolute;
             top: 78%;
             left: 22.3%;
@@ -116,6 +117,7 @@
             width: 35px; 
             height: 35px; 
             margin-right: 5px; 
+            margin-bottom: 0.5rem;
             vertical-align: middle; 
             border: none;
         }
@@ -124,6 +126,17 @@
             color: white;
             font-size: 1.1rem;
             text-align: center;
+            align-items: center;
+            margin-left: -25%;
+        }
+
+        .manga-right-button h6{
+            color: white;
+            font-size: 1.1rem;
+            text-align: center;
+            align-items: center;
+            margin-left: -27%;
+            margin-top: 0.5rem;
         }
 
         #work-status{
@@ -132,10 +145,10 @@
         }
 
         #work-status img, .back-image {
-       width: 20px; 
-       height: 20px; 
-      margin-right: 5px; 
-      vertical-align: middle; 
+            width: 20px; 
+            height: 20px; 
+            margin-right: 5px; 
+            vertical-align: middle; 
         }
 
         .upload-date{
@@ -145,61 +158,98 @@
         .description-container {
             margin-top: 17rem;
             font-size: 1.3rem;
-    color: rgb(200, 200, 200);
-    padding: 2rem 12%;
-    position: relative;
-}
+            color: rgb(200, 200, 200);
+            padding: 2rem 12%;
+            position: relative;
+        }
 
-.description-short {
-    overflow: hidden;
-    max-height: 8rem; /* Adjust based on desired number of lines */
-    transition: max-height 0.3s ease; /* Smooth transition */
-}
+        .description-short {
+            overflow: hidden;
+            max-height: 8rem; /* Adjust based on desired number of lines */
+            transition: max-height 0.3s ease; /* Smooth transition */
+        }
 
-.description-full {
-    display: none; 
-    max-height: none;
-}
+        .description-full {
+            display: none; 
+            max-height: none;
+        }
 
-.expand-description {
-    position: absolute;
-    top: 60%;
-    left: 47%;
-    margin-top: 1rem;
-    cursor: pointer;
-}
+        .expand-description {
+            position: absolute;
+            top: 60%;
+            left: 47%;
+            margin-top: 1rem;
+            cursor: pointer;
+        }
 
-.expand-description  {
-    font-size: 24px;
-    color: white;
-}
+        .expand-description  {
+            font-size: 24px;
+            color: white;
+        }
 
-.tot_chapters{
-    color: white;
-    font-size: 2.2rem;
-    position: absolute;
-    top:88%;
-    left:10.3%;
-}
+        .tot_chapters{
+            color: white;
+            font-size: 2.2rem;
+            position: absolute;
+            top:88%;
+            left:10.3%;
+        }
 
-hr{
-    color: white;
-}
+        hr{
+            color: white;
+        }
 
 
         .pdf-files{
-            margin-top: 35rem;
+            margin-top: 38rem;
             position: absolute;
             left: 10%;
             width: 78%;
         }
 
         .pdf-file{
-            margin-bottom: 1.5rem;
-            padding: 2rem;
+            margin-bottom: 3rem;
+            padding: 2rem 5rem;
             border: 1px solid white;
+            background-color: rgb(48, 48, 48);
+            transition: 0.5s ease;
         }
 
+        .pdf-file:hover{
+            transform: translateY(-7%);
+        }
+        
+        .sort-dropdown{
+            position : absolute;
+            top: 0%;
+            left: 670%;
+            display: inline-block;
+        }
+        
+        #sort-chapters{
+            background-color: #4b0d5e;
+            color: white;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 50px;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            cursor: pointer;
+            outline: none;
+        }
+
+        #sort-chapters img{
+            width: 100px;
+        }
+
+        .sort-dropdown option{
+            background-color: #4b0d5e;
+            color: white;
+            padding: 10px;
+        }
+        
 
     </style>
 </head>
@@ -215,7 +265,7 @@ hr{
             </a>
         </div>
         <div class="banner">
-            <img src="{{ comics.banner_image.url }}" class="banner_image" alt="Psychopomp" />
+            <img src="{{ comics.banner_image.url }}" class="banner_image" alt="Banner_Image" />
             <div class="overlay"></div>
             <div class="manga_content">
                 <div class="manga-left">
@@ -229,31 +279,44 @@ hr{
                         <h3 id="work-status"></h3>
                     </div>
                     <div class="manga-right-button">
-                        <!-- <button id="library">Library</button> -->
-                        <img src="{% static 'Images/like.png' %}" id="library" alt="Heart">
-                        <h5>In library</h5>
+                        <div class="heart">
+                            <img src="{% static 'Images/like.png' %}" id="library" alt="Heart">
+                            <h5>In library</h5>
+                        </div>
+                        <div class="web">
+                            <img src="{% static 'Images/earth2.png' %}" id="search-google" alt="World Icon" style="width: 30px; height: 30px; cursor: pointer;">
+                            <h6>Web View</h6>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="description-container">
                 <div class="description-short">
-                    {{ comics.description|truncatewords_html:50 }} <!-- Truncate description to 2 words -->
+                    {{ comics.description|truncatewords_html:50 }}
                 </div>
-                <div class="description-full" style="display: none;"> <!-- Initially hidden -->
-                    {{ comics.description }} <!-- Full description -->
+                <div class="description-full" style="display: none;"> 
+                    {{ comics.description }} 
                 </div>
                 <div class="expand-description">
-                    <img src="{% static 'Images/arrow-down.png' %}" id="expand-icon" width="20px" height="20px" alt="Arrow"><!-- Down arrow icon -->
+                    <img src="{% static 'Images/arrow-down.png' %}" id="expand-icon" width="20px" height="20px" alt="Arrow">
                 </div>
             </div>
         </div>
         <div class="tot_chapters">
         <h4><pre>{{comics.tot_chapters}}  chapters</pre></h4>
+        <div class="sort-dropdown">
+            <select id="sort-chapters">
+                <option value="sort">--SORT-BY--</option>
+                <option value="asc">Chapters <img src="{% static 'Images/up.png' %}" ></option>
+                <option value="desc">Chapters <img src="{% static 'Images/down.png' %}" ></option>
+            </select>
+        </div>
+        
         </div>
         <hr>
-        <!-- Display PDF files -->
+        
+
         <div class="pdf-files">
-            <h2>PDF Files</h2>
             {% for pdf in pdf_files %}
                 <div class="pdf-file">
                     <a href="{{ pdf.file.url }}" target="_blank"><h1 class="pdf_chapters"></h1></a>
@@ -264,12 +327,12 @@ hr{
 
 
     <script>
-        // JavaScript to set the work status based on the value of comics.work_status
-        var workStatus = "{{ comics.work_status }}"; // Get the work status from Django template
+        
+        var workStatus = "{{ comics.work_status }}"; 
         if (workStatus === 'True') {
-            document.getElementById('work-status').innerHTML = '<img src="{% static "Images/double-tick.png" %}" alt="Completed"> Completed';
+            document.getElementById('work-status').innerHTML = '<img src="{% static "Images/double-tick.png" %}" style="border:none;" alt="Completed"> Completed';
         } else {
-            document.getElementById('work-status').innerHTML = '<img src="{% static "Images/time-left.png" %}" alt="Ongoing"> Ongoing';
+            document.getElementById('work-status').innerHTML = '<img src="{% static "Images/time-left.png" %}" style="border:none;" alt="Ongoing"> Ongoing';
         }
 
         // Library 
@@ -311,10 +374,9 @@ hr{
             });
         });
 
-        // Set the chapter names dynamically based on the number of PDF files
         const pdfChapters = document.querySelectorAll('.pdf_chapters');
         pdfChapters.forEach((element, index) => {
-            element.innerHTML = "Chapter " + (index + 1);
+            element.innerHTML = "Vol 1 - Chapter " + (index + 1);
         });
 
         document.querySelector('.expand-description').addEventListener('click', function() {
@@ -334,6 +396,47 @@ hr{
         expandIcon.src = '{% static "Images/arrow-down.png" %}';
     }
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('sort-chapters').addEventListener('change', function() {
+        const selectedOption = this.value;
+        const chapterContainer = document.querySelector('.pdf-files');
+        const chapters = chapterContainer.querySelectorAll('.pdf-file');
+    
+        if (selectedOption === 'asc') {
+            const sortedChapters = Array.from(chapters).sort((a, b) => {
+                const pdfChaptersA = a.querySelector('.pdf_chapters').textContent.trim().split(' ');
+                const pdfChaptersB = b.querySelector('.pdf_chapters').textContent.trim().split(' ');
+                const chapterA = parseInt(pdfChaptersA[pdfChaptersA.length - 1]); 
+                const chapterB = parseInt(pdfChaptersB[pdfChaptersB.length - 1]); 
+                return chapterA - chapterB;
+            });
+            chapterContainer.innerHTML = ''; 
+            sortedChapters.forEach(chapter => { 
+                chapterContainer.appendChild(chapter);
+            });
+        } else if (selectedOption === 'desc') {
+            const sortedChapters = Array.from(chapters).sort((a, b) => {
+                const pdfChaptersA = a.querySelector('.pdf_chapters').textContent.trim().split(' ');
+                const pdfChaptersB = b.querySelector('.pdf_chapters').textContent.trim().split(' ');
+                const chapterA = parseInt(pdfChaptersA[pdfChaptersA.length - 1]); 
+                const chapterB = parseInt(pdfChaptersB[pdfChaptersB.length - 1]); 
+                return chapterB - chapterA;
+            });
+            chapterContainer.innerHTML = ''; 
+            sortedChapters.forEach(chapter => {
+                chapterContainer.appendChild(chapter);
+            });
+        }
+    });
+});
+
+// Web View search
+document.getElementById('search-google').addEventListener('click', function() {
+            const mangaName = "{{ comics.name }}";
+            const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(mangaName)}`;
+            window.open(googleSearchUrl, '_blank');
+        });
 
     </script>
 </body>

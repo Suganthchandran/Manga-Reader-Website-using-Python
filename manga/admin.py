@@ -10,6 +10,8 @@ class PDFFileInline(admin.TabularInline):
 class PDFFileAdmin(admin.ModelAdmin):
     pass
 
+
+
 admin.site.register(PDFFile, PDFFileAdmin)
 
 admin.site.register(Genre)

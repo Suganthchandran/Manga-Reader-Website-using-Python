@@ -41,6 +41,7 @@ class Mangas(models.Model):
 
 class PDFFile(models.Model):
     file = models.FileField(upload_to='pdf_files/')
+    chapter_number = models.IntegerField(default=0)
 
     def __str__(self):
         return self.file.name

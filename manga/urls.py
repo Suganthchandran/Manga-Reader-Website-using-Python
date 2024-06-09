@@ -15,4 +15,5 @@ urlpatterns=[
     path('remove_manga/<int:library_id>/', views.remove_manga, name='remove_manga'),
     path('clear-alert/', views.clear_alert, name='clear_alert'),
     path('search/', views.search, name='search'),
+    
 ]
