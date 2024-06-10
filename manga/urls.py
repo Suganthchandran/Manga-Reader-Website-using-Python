@@ -8,7 +8,6 @@ urlpatterns=[
     path('logout',views.logout_page,name="logout"),
     path('genre',views.genre,name="genre"),
     path('genre/<slug:name>/', views.genreview, name="genre"),
-    # path('genre/<slug:cname>/<slug:mname>', views.manga_details, name="manga_details"),
     re_path(r'^genre/(?P<cname>[-a-zA-Z0-9_]+)/(?P<mname>[-a-zA-Z0-9_ ]+)$', views.manga_details, name="manga_details"),
     path('add-to-library/', views.library, name='add_to_library'),
     path('library/', views.manga_library, name="library"),
