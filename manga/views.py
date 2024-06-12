@@ -121,3 +121,20 @@ def search(request):
     query = request.GET.get('q')
     results = Mangas.objects.filter(name__icontains=query) if query else []
     return render(request, 'manga/search_results.html', {'results': results, 'query': query})
+
+
+def chapter_view(request, comic_id, chapter_number):
+    comics = get_object_or_404(Mangas, id=comic_id)
+    chapter = comics.pdf_files.filter(chapter_number=chapter_number).first()
+    
+    previous_chapter = chapter_number - 1 if chapter_number > 1 else None
+    next_chapter = chapter_number + 1 if comics.pdf_files.filter(chapter_number=chapter_number + 1).exists() else None
+
+    context = {
+        'comics': comics,
+        'chapter_number': chapter_number,
+        'chapter': chapter,
+        'previous_chapter': previous_chapter,
+        'next_chapter': next_chapter,
+    }
+    return render(request, 'manga/chapter.html', context)

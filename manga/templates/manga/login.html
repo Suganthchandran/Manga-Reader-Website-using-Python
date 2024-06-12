@@ -8,7 +8,6 @@
     <title>Document</title>
     <link rel="stylesheet" href="{% static 'CSS/style.css' %}">
     <style>
-/* styles.css */
 body {
     margin: 0;
     padding: 0;
@@ -33,7 +32,7 @@ body {
     background: rgba(255, 255, 255, 0.1);
     display: flex;
     align-items: center;
-    padding:40px 70px; /* Increased padding */
+    padding:40px 70px; 
     border-radius: 10px;
     backdrop-filter: blur(10px);
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
@@ -48,22 +47,22 @@ form {
 
 h2 {
     color: #fff;
-    margin-bottom: 30px; /* Increased margin */
-    font-size: 24px; /* Increased font size */
+    margin-bottom: 30px; 
+    font-size: 24px; 
 }
 
 .input-group {
     position: relative;
     width: 100%;
-    margin-bottom: 30px; /* Increased margin */
+    margin-bottom: 30px; 
 }
 
 .form-container input{
     width: 100%;
-    padding: 15px 25px; /* Increased padding */
+    padding: 15px 25px; 
     background: none;
-    border: 2px solid #fff; /* Increased border width */
-    border-radius: 8px; /* Increased border radius */
+    border: 2px solid #fff; 
+    border-radius: 8px; 
     color: #fff;
     outline: none;
     font-size: 16px;
@@ -74,25 +73,23 @@ h2 {
 .input-group label {
     position: absolute;
     top: 38%;
-    left: 15px; /* Increased left padding */
+    left: 15px; 
     color: #fff;
     pointer-events: none;
     transition: 0.3s;
-    /* color: var(--main-color);
-    font-size: 1.4rem; */
 }
 
 
 button {
     width: 60%;
-    padding: 15px; /* Increased padding */
+    padding: 15px; 
     background: var(--main-color);
     border: none;
-    border-radius: 50px; /* Increased border radius */
+    border-radius: 50px; 
     color: #fff;
     cursor: pointer;
     transition: background 0.3s;
-    font-size: 16px; /* Increased font size */
+    font-size: 16px; 
 }
 
 button:hover {
@@ -101,7 +98,7 @@ button:hover {
 
 .login {
     color: #fff;
-    margin-top: 30px; /* Increased margin */
+    margin-top: 30px; 
 }
 
 .login a {
@@ -173,7 +170,6 @@ button:hover {
     {% endif %}
 <script>
    document.querySelector('#username').addEventListener('focus', function(){
-    // document.querySelector('label[for="username"]').style.top = "0%";
     document.querySelector('.label1').style.top = "-30%";
     document.querySelector('.label1').style.color = "#5982f4";
     document.querySelector('.label1').style.fontSize = "1.5rem";

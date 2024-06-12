@@ -165,8 +165,8 @@
 
         .description-short {
             overflow: hidden;
-            max-height: 8rem; /* Adjust based on desired number of lines */
-            transition: max-height 0.3s ease; /* Smooth transition */
+            max-height: 8rem; 
+            transition: max-height 0.3s ease; 
         }
 
         .description-full {
@@ -315,10 +315,20 @@
         <hr>
         
 
-        <div class="pdf-files">
+        <!-- <div class="pdf-files">
             {% for pdf in pdf_files %}
                 <div class="pdf-file">
                     <a href="{{ pdf.file.url }}" target="_blank"><h1 class="pdf_chapters"></h1></a>
+                </div>
+            {% endfor %}
+        </div> -->
+
+        <div class="pdf-files">
+            {% for pdf in pdf_files %}
+                <div class="pdf-file">
+                    <a href="{% url 'chapter' comics.id pdf.chapter_number %}">
+                        <h1 class="pdf_chapters">Vol 1 - Chapter {{ pdf.chapter_number }}</h1>
+                    </a>
                 </div>
             {% endfor %}
         </div>
