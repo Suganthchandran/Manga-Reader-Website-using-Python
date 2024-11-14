@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Verification</title>
+    <!-- Add your CSS or use inline styles -->
+</head>
+<body>
+    {% include 'manga/inc/Navbar.html' %}
+    <div class="container">
+        <div class="form-container">
+            <form method="post">
+                {% csrf_token %}
+                <h2>OTP Verification</h2>
+                <p>Please check your email for the OTP.</p>
+                <div class="input-group">
+                    <input type="text" name="otp" id="otp" required>
+                    <label for="otp">Enter OTP</label>
+                </div>
+                <button type="submit">Verify OTP</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

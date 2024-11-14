@@ -104,12 +104,12 @@
     <ul class="card-list">
         {% for item in category %}
         <li class="card">
-            <a class="card-image" title="{{item.genre_description}}" href="{% url 'genre' item.name %}">
-                <img src="{{item.image.url}}" alt="Psychopomp" />
+            <a class="card-image" title="{{ item.genre_description }}" href="{% url 'genreview' name=item.name %}">
+                <img src="{{ item.image.url }}" alt="{{ item.name }}" />
             </a>
-            <a class="card-description" href="{% url 'genre' item.name %}">
-                <h2>{{item.name}}</h2>
-            </a>
+            <a class="card-description" href="{% url 'genreview' name=item.name %}">
+                <h2>{{ item.name }}</h2>
+            </a>            
         </li>
         {% endfor %}
     </ul>

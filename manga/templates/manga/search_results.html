@@ -15,7 +15,8 @@
             padding: 9%;
         }
 
-        .search-item {
+        .search-item,
+        .did-you-mean {
             color: white;
             font-weight: 700;
             font-size: 3.9rem;
@@ -95,26 +96,220 @@
         .card-description > p {
             margin: 0;
         }
+
+        .filter-button {
+            position: absolute;
+            right: 5%;
+            top: 10%;
+            background-color: white;
+            color: black;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .filter-box {
+            display: none;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+            position: absolute;
+            right: 5%;
+            top: 15%;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .filter-box select, .filter-box input[type="checkbox"] {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .filter-box button {
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+.genre-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.genre-btn {
+    padding: 10px 20px;
+    background-color: transparent;
+    border: 2px solid #fff;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: border-color 0.3s, color 0.3s;
+}
+
+.genre-btn.selected {
+    border-color: #ff6600;  /* Change this to your desired color */
+    color: #ff6600;  /* Change this to your desired text color */
+}
+
+.genre-btn:hover {
+    border-color: #ff6600;  /* Highlight border on hover */
+}
+
+
     </style>
 </head>
 <body>
     {% include 'manga/inc/Navbar.html' %}
+
+    <button class="filter-button" onclick="toggleFilterBox()">Filter</button>
+    <div class="filter-box" id="filterBox">
+        <h3>Filter Options</h3>
+        <form method="GET" action="{% url 'search' %}">
+            <label for="artist">Artist:</label>
+            <select name="artist" id="artist">
+                <option value="">Select Artist</option>
+                {% for artist in artists %}
+                    <option value="{{ artist }}">{{ artist }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="author">Author:</label>
+            <select name="author" id="author">
+                <option value="">Select Author</option>
+                {% for author in authors %}
+                    <option value="{{ author }}">{{ author }}</option>
+                {% endfor %}
+            </select>
+
+            <div class="filter-section">
+                <label>Genres:</label>
+                <div class="genre-buttons">
+                    {% for genre in genres %}
+                        <button type="button" class="genre-btn {% if genre.id|stringformat:'s' in request.GET.genres %}selected{% endif %}" data-genre-id="{{ genre.id }}">{{ genre.name }}</button>
+                    {% endfor %}
+                </div>
+                <input type="hidden" name="genres" id="selected-genres" value="{{ request.GET.genres }}">
+            </div>
+
+            <label for="color">Color:</label>
+            <select name="color" id="color">
+                <option value="">Select Color</option>
+                <option value="color">Color</option>
+                <option value="black_and_white">Black and White</option>
+            </select>
+
+            <label for="adaption">Adaption:</label>
+            <select name="adaption" id="adaption">
+                <option value="">Select Adaption</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
+
+            <label for="work_status">Work Status:</label>
+            <select name="work_status" id="work_status">
+                <option value="">Select Status</option>
+                <option value="0">Ongoing</option>
+                <option value="1">Completed</option>
+            </select>
+
+            <label for="start_date">Start Date:</label>
+            <input type="date" name="start_date" id="start_date">
+
+            <label for="end_date">End Date:</label>
+            <input type="date" name="end_date" id="end_date">
+
+            <div class="filter-section">
+                <label for="sort">Sort By:</label>
+                <select name="sort" id="sort">
+                    <option value="A-Z" {% if sort_order == 'A-Z' %}selected{% endif %}>A-Z</option>
+                    <option value="Z-A" {% if sort_order == 'Z-A' %}selected{% endif %}>Z-A</option>
+                    <option value="Recently Added" {% if sort_order == 'Recently Added' %}selected{% endif %}>Recently Added</option>
+                    <option value="Recently Updated" {% if sort_order == 'Recently Updated' %}selected{% endif %}>Recently Updated</option>
+                    <option value="Released Date" {% if sort_order == 'Released Date' %}selected{% endif %}>Released Date</option>
+                </select>
+            </div>
+            <button type="button" class="reset-btn" onclick="resetFilters()">Reset Filters</button>
+            <button type="submit">Set Filter</button>
+        </form>
+    </div>
+
+
     <div class="container">
-        <h1 class="search-item">Search Results for "{{ query }}"</h1>
+
+        {% if query %}
+            {% if display_suggestion %}
+                <p class="did-you-mean">
+                    Did you mean <a href="{% url 'search' %}?q={{ suggested_query }}">{{ suggested_query }}</a>?
+                </p>
+            {% endif %}
+
+            {% if suggested_query %}
+                <h2 class="search-item">Search Results for "{{ suggested_query }}"</h2>
+            {% else %}
+                <h2 class="search-item">Search Results for "{{ query }}"</h2>
+            {% endif %}
+        {% endif %}
+        
         <ul class="card-list">
             {% for manga in results %}
-            <li class="card">
-                <a class="cards-image" href="{% url 'manga_details' manga.genre.name manga.name %}">
-                    <img src="{{ manga.manga_image.url }}" alt="{{ manga.name }}">
-                </a>
-                <a class="card-description" href="{% url 'manga_details' manga.genre.name manga.name %}">
-                    <h2>{{ manga.name }}</h2>
-                </a>
-            </li>
+                <li class="card">
+                    <a class="cards-image" href="{% url 'manga_details' manga.genre.name manga.name %}">
+                        <img src="{{ manga.manga_image.url }}" alt="{{ manga.name }}">
+                    </a>
+                    <a class="card-description" href="{% url 'manga_details' manga.genre.name manga.name %}">
+                        <h2>{{ manga.name }}</h2>
+                    </a>
+                </li>
             {% empty %}
-            <p>No manga found matching your query.</p>
+                <p style="color: white;">No manga found matching your query.</p>
             {% endfor %}
         </ul>
     </div>
+
+    <script>
+        function toggleFilterBox() {
+            const filterBox = document.getElementById('filterBox');
+            filterBox.style.display = filterBox.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function resetFilters() {
+        document.querySelectorAll('select').forEach(function(select) {
+            select.selectedIndex = 0; 
+        });
+
+        document.querySelectorAll('.genre-btn').forEach(function(button) {
+            button.classList.remove('selected'); 
+        });
+
+        document.querySelector('input[name="start_date"]').value = '';
+        document.querySelector('input[name="end_date"]').value = '';
+    }
+
+        document.addEventListener('DOMContentLoaded', function () {
+        const genreButtons = document.querySelectorAll('.genre-btn');
+        const genresInput = document.getElementById('selected-genres');
+        
+        genreButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                this.classList.toggle('selected');
+                
+                const selectedGenres = Array.from(document.querySelectorAll('.genre-btn.selected'))
+                                             .map(button => button.getAttribute('data-genre-id'));
+                
+                genresInput.value = selectedGenres.join(',');
+            });
+        });
+    });
+
+    </script>
 </body>
 </html>

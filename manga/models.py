@@ -21,18 +21,32 @@ class Genre(models.Model):
         return self.name
     
 class Mangas(models.Model):
-    genre = models.ForeignKey(Genre,on_delete=models.CASCADE)
-    name = models.CharField(max_length=250,null=False,blank=False)
-    japanese_name = models.CharField(max_length=250,null=False,blank=False)
-    author = models.CharField(max_length=150,null=False,blank=False)
-    manga_image = models.ImageField(upload_to=getFileName,null=True,blank=True)
-    banner_image = models.ImageField(upload_to=getFileName,null=True,blank=True)
-    work_status = models.BooleanField(default=False,help_text="0-ongoing , 1-Completed")
-    tot_chapters = models.IntegerField(null=False,blank=False)
-    description = models.TextField(max_length=500,null=False,blank=False)
-    status = models.BooleanField(default=False,help_text="0-show , 1-Hidden")
-    trending = models.BooleanField(default=False,help_text="0-default , 1-trending")
-    recommend = models.BooleanField(default=False,help_text="0-default , 1-recommend")
+    COLOR_CHOICES = [
+        ('black_and_white', 'Black and White'),
+        ('color', 'Color'),
+    ]
+    
+    ADAPTION_CHOICES = [
+        ('yes', 'Yes'),
+        ('no', 'No'),
+    ]
+    
+    genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
+    name = models.CharField(max_length=250, null=False, blank=False)
+    japanese_name = models.CharField(max_length=250, null=False, blank=False)
+    author = models.CharField(max_length=150, null=False, blank=False)
+    artist = models.CharField(max_length=150, null=True, blank=True)
+    released_date = models.DateField(null=True, blank=True)
+    manga_image = models.ImageField(upload_to=getFileName, null=True, blank=True)
+    banner_image = models.ImageField(upload_to=getFileName, null=True, blank=True)
+    work_status = models.BooleanField(default=False, help_text="0-ongoing , 1-Completed")
+    tot_chapters = models.IntegerField(null=False, blank=False)
+    description = models.TextField(max_length=500, null=False, blank=False)
+    status = models.BooleanField(default=False, help_text="0-show , 1-Hidden")
+    trending = models.BooleanField(default=False, help_text="0-default , 1-trending")
+    recommend = models.BooleanField(default=False, help_text="0-default , 1-recommend")
+    color = models.CharField(max_length=15, choices=COLOR_CHOICES, default='color')  # New field
+    adaption = models.CharField(max_length=3, choices=ADAPTION_CHOICES, default='no')  # New field
     created_at = models.DateTimeField(auto_now_add=True)
     pdf_files = models.ManyToManyField('PDFFile', blank=True)
 
@@ -50,5 +64,4 @@ class Library(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     book = models.ForeignKey(Mangas,on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
-
-   
+    

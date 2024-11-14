@@ -250,6 +250,103 @@
             padding: 10px;
         }
 
+        .download-btn {
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    padding: 10px 20px; /* Padding around text */
+    text-align: center; /* Centered text */
+    text-decoration: none; /* Remove underlining */
+    border-radius: 5px; /* Rounded corners */
+    border: none;
+    cursor: pointer; /* Pointer cursor on hover */
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 1rem;
+}
+
+.download-btn:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+.pdf-file {
+    margin-bottom: 3rem;
+    padding: 2rem 5rem;
+    border: 1px solid white;
+    background-color: rgb(48, 48, 48);
+    transition: 0.5s ease;
+}
+
+.pdf-file.read {
+    opacity: 0.5; /* Low opacity for read chapters */
+    background-color: rgb(70, 70, 70); /* Optional: change the background to indicate it's read */
+}
+
+.mark-read-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px 15px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.mark-read-btn:hover {
+    background-color: #45a049;
+}
+
+.pdf-file {
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    transition: opacity 0.3s ease;
+}
+
+.read {
+    opacity: 0.5;  /* Reduces opacity to mark the chapter as read */
+}
+
+button {
+    margin: 5px;
+}
+
+.search-bar-container {
+    text-align: right; /* Aligns the search bar to the right */
+    margin-bottom: 10px; /* Adds a bit of space between search and chapter list */
+}
+
+#chapter-search {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    width: 200px; /* You can adjust this as needed */
+}
+
+.resume-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px 25px;
+    font-size: 16px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+}
+
+.resume-button:hover {
+    background-color: #45a049;
+}
+
+
+
+
     </style>
 </head>
 <body>
@@ -258,10 +355,10 @@
         <input type="hidden" value="{{ comics.id }}" id="bid">
         {% csrf_token %}
         <div class="back">
-            <a href="{% url 'genre' comics.genre.name %}">
+            <a href="{% url 'genreview' comics.genre.name %}">
                 <img src="{% static 'Images/Back.png' %}" class="back-image" alt="Back">
                 <h3>Back</h3>
-            </a>
+            </a>                      
         </div>
         <div class="banner">
             <img src="{{ comics.banner_image.url }}" class="banner_image" alt="Banner_Image" />
@@ -303,35 +400,63 @@
         </div>
         <div class="tot_chapters">
         <h4><pre>{{comics.tot_chapters}}  chapters</pre></h4>
+        
         <div class="sort-dropdown">
             <select id="sort-chapters">
                 <option value="sort">--SORT-BY--</option>
                 <option value="asc">Chapters <span>&#8595;</span><!--<img src="{% static 'Images/up.png' %}" >--></option>
                 <option value="desc">Chapters <span>&#8593;</span><!--<img src="{% static 'Images/down.png' %}" >--></option>
             </select>
+
+            
+        </div>
+
+        <div class="search-bar-container">
+            <input type="text" id="chapter-search" placeholder="Search Chapter..." />
         </div>
         
         </div>
         <hr>
         
+        <button id="resume-button" class="resume-button">Resume</button>
 
-        <!-- <div class="pdf-files">
-            {% for pdf in pdf_files %}
-                <div class="pdf-file">
-                    <a href="{{ pdf.file.url }}" target="_blank"><h1 class="pdf_chapters"></h1></a>
-                </div>
-            {% endfor %}
-        </div> -->
+        <div class="download-dropdown">
+            <select id="download-chapters">
+                <option value="">Download</option>
+                <option value="next-5">Next 5 Unread Chapters</option>
+                <option value="next-10">Next 10 Unread Chapters</option>
+                <option value="all-unread">All Unread Chapters</option>
+                <option value="all">All Chapters</option>
+                <option value="custom-range">Custom Range</option>
+            </select>
+        </div>
 
+        
         <div class="pdf-files">
+           
+
+            
             {% for pdf in pdf_files %}
-                <div class="pdf-file">
-                    <a href="{% url 'chapter' comics.id pdf.chapter_number %}">
-                        <h1 class="pdf_chapters">Vol 1 - Chapter {{ pdf.chapter_number }}</h1>
-                    </a>
-                </div>
+            <div class="pdf-file" id="chapter-{{ pdf.chapter_number }}">
+                
+                <!-- Mark as Read Button -->
+                <button class="mark-read-btn" data-chapter-id="{{ pdf.chapter_number }}">Mark as Read</button>
+                
+                <!-- Chapter Link - Clicking this will open the chapter and mark it as read -->
+                <a href="{% url 'chapter' comics.id pdf.chapter_number %}" class="chapter-link" data-chapter-id="{{ pdf.chapter_number }}">
+                    <h1 class="pdf_chapters">Vol 1 - Chapter {{ pdf.chapter_number }}</h1>
+                </a>
+                
+                <!-- Download Button - Separate from the chapter link -->
+                <a href="{{ pdf.file.url }}" download>
+                    <button class="download-btn">Download Chapter {{ pdf.chapter_number }}</button>
+                </a>
+                
+            </div>
             {% endfor %}
         </div>
+        
+        
     </div>
 
 
@@ -446,6 +571,252 @@ document.getElementById('search-google').addEventListener('click', function() {
             const googleSearchUrl = `https://www.google.com/search?q=${encodeURIComponent(mangaName)}`;
             window.open(googleSearchUrl, '_blank');
         });
+      
+
+        document.addEventListener('DOMContentLoaded', function() {
+    // Get the manga ID to uniquely identify the chapters
+    const mangaId = "{{ comics.id }}"; // Check this is working properly
+    console.log("Manga ID:", mangaId);
+
+    // Select all the chapter elements
+    const chapterLinks = document.querySelectorAll('.chapter-link'); // Assuming '.chapter-link' is the class for chapter links
+    const buttons = document.querySelectorAll('.mark-read-btn');
+    console.log("Found chapter links:", chapterLinks.length);
+    console.log("Found mark-read buttons:", buttons.length);
+
+    // Loop through each chapter link and add a click event listener
+    chapterLinks.forEach(link => {
+        link.addEventListener('click', function(event) {
+            const chapterId = this.getAttribute('data-chapter-id');
+            console.log("Chapter clicked:", chapterId);
+            markChapterAsRead(chapterId);
+        });
+    });
+
+    // Loop through each mark-read button to add a click event listener
+    buttons.forEach(button => {
+        button.addEventListener('click', function() {
+            const chapterId = this.getAttribute('data-chapter-id');
+            console.log("Mark-read button clicked for:", chapterId);
+            toggleChapterReadState(chapterId);
+        });
+    });
+
+    // Function to mark a chapter as read
+    function markChapterAsRead(chapterId) {
+        const chapterElement = document.getElementById('chapter-' + chapterId);
+        const button = chapterElement ? chapterElement.querySelector('.mark-read-btn') : null;
+        if (chapterElement && button && !chapterElement.classList.contains('read')) {
+            console.log("Marking as read:", chapterId);
+            chapterElement.classList.add('read');
+            chapterElement.style.opacity = '0.5';
+            button.textContent = 'Mark as Unread';
+            persistReadState();
+        } else {
+            console.log("Could not mark as read:", chapterId);
+        }
+    }
+
+    // Function to toggle read/unread state when clicking the mark-read button
+    function toggleChapterReadState(chapterId) {
+        const chapterElement = document.getElementById('chapter-' + chapterId);
+        const button = chapterElement ? chapterElement.querySelector('.mark-read-btn') : null;
+        if (chapterElement && button) {
+            if (chapterElement.classList.contains('read')) {
+                console.log("Unmarking as read:", chapterId);
+                chapterElement.classList.remove('read');
+                chapterElement.style.opacity = '1';
+                button.textContent = 'Mark as Read';
+            } else {
+                console.log("Marking as read through button:", chapterId);
+                chapterElement.classList.add('read');
+                chapterElement.style.opacity = '0.5';
+                button.textContent = 'Mark as Unread';
+            }
+            persistReadState();
+        } else {
+            console.log("Could not toggle read state for:", chapterId);
+        }
+    }
+
+    // Function to persist the read/unread state
+    function persistReadState() {
+        const readChapters = [];
+        document.querySelectorAll('.pdf-file.read').forEach(chapter => {
+            const chapterId = chapter.id.replace('chapter-', '');
+            readChapters.push(chapterId);
+        });
+        // Store read chapters in localStorage with manga-specific key
+        console.log("Saving read chapters:", readChapters);
+        localStorage.setItem(`readChapters_${mangaId}`, JSON.stringify(readChapters));
+    }
+
+    // On page load, check localStorage and set the initial state for the chapters
+    const readChapters = JSON.parse(localStorage.getItem(`readChapters_${mangaId}`)) || [];
+    console.log("Loaded read chapters from storage:", readChapters);
+    readChapters.forEach(chapterId => {
+        const chapterElement = document.getElementById('chapter-' + chapterId);
+        const button = chapterElement ? chapterElement.querySelector('.mark-read-btn') : null;
+        if (chapterElement && button) {
+            console.log("Setting chapter as read on page load:", chapterId);
+            chapterElement.classList.add('read');
+            chapterElement.style.opacity = '0.5';
+            button.textContent = 'Mark as Unread';
+        } else {
+            console.log("Could not set read state for:", chapterId);
+        }
+    });
+});
+
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Handle the download dropdown
+    document.getElementById('download-chapters').addEventListener('change', function() {
+        const selectedOption = this.value;
+        const chapters = document.querySelectorAll('.pdf-file');
+        
+        let chaptersToDownload = [];
+
+        // Handle each case for downloading
+        switch (selectedOption) {
+            case 'next-5':
+                chaptersToDownload = getNextUnreadChapters(chapters, 5);
+                break;
+            case 'next-10':
+                chaptersToDownload = getNextUnreadChapters(chapters, 10);
+                break;
+            case 'all-unread':
+                chaptersToDownload = getAllUnreadChapters(chapters);
+                break;
+            case 'all':
+                chaptersToDownload = chapters;
+                break;
+            case 'custom-range':
+                // Handle custom range input
+                let start = prompt('Enter start chapter number:');
+                let end = prompt('Enter end chapter number:');
+                chaptersToDownload = getChaptersInRange(chapters, start, end);
+                break;
+        }
+
+        // Download the selected chapters
+        downloadChapters(chaptersToDownload);
+    });
+
+    // Function to get unread chapters
+    function getUnreadChapters(chapters) {
+        return Array.from(chapters).filter(chapter => !chapter.classList.contains('read'));
+    }
+
+    // Function to get the next 'n' unread chapters in ascending order
+    function getNextUnreadChapters(chapters, n) {
+        const unreadChapters = getUnreadChapters(chapters);
+        const sortedChapters = unreadChapters.sort((a, b) => {
+            const chapterA = parseInt(a.querySelector('.pdf_chapters').textContent.split(' ')[2]);
+            const chapterB = parseInt(b.querySelector('.pdf_chapters').textContent.split(' ')[2]);
+            return chapterA - chapterB;
+        });
+        return sortedChapters.slice(0, n);
+    }
+
+    // Function to get all unread chapters
+    function getAllUnreadChapters(chapters) {
+        return getUnreadChapters(chapters);
+    }
+
+    // Function to get chapters in a specific range
+    function getChaptersInRange(chapters, start, end) {
+        const rangeChapters = Array.from(chapters).filter(chapter => {
+            const chapterNumber = parseInt(chapter.querySelector('.pdf_chapters').textContent.split(' ')[2]);
+            return chapterNumber >= start && chapterNumber <= end;
+        });
+        return rangeChapters;
+    }
+
+    // Function to download chapters
+    function downloadChapters(chaptersToDownload) {
+        if (chaptersToDownload.length === 0) {
+            alert('No chapters to download.');
+            return;
+        }
+
+        chaptersToDownload.forEach(chapter => {
+            const downloadButton = chapter.querySelector('.download-btn');
+            if (downloadButton) {
+                const downloadUrl = downloadButton.getAttribute('href');
+                const link = document.createElement('a');
+                link.href = downloadUrl;
+                link.download = `Chapter-${chapter.querySelector('.pdf_chapters').textContent.trim()}.pdf`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+                // chapter.classList.add('read');
+                // chapter.style.opacity = '0.5'; // Make it appear as read
+                // const markReadButton = chapter.querySelector('.mark-read-btn');
+                // if (markReadButton) {
+                //     markReadButton.textContent = 'Mark as Unread';
+                // }
+
+
+            }
+        });
+    }
+});
+
+const searchInput = document.getElementById("chapter-search");
+
+searchInput.addEventListener("input", function() {
+    const searchTerm = this.value.toLowerCase();
+    const chapters = document.querySelectorAll(".pdf-file");
+
+    chapters.forEach(chapter => {
+        const chapterNumber = chapter.id.split("-")[1]; // Gets the chapter number
+        if (chapterNumber.includes(searchTerm)) {
+            chapter.style.display = "block"; // Show matching chapters
+        } else {
+            chapter.style.display = "none"; // Hide non-matching chapters
+        }
+    });
+});
+
+searchInput.addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+        event.preventDefault(); // Prevents the default form submission if any
+        searchInput.value = ""; // Clears the input field
+    }
+});
+
+document.getElementById("resume-button").addEventListener("click", function() {
+    // Get all chapter elements
+    const chapters = document.querySelectorAll(".pdf-file");
+    let foundUnread = false;
+
+    // Loop through chapters to find the first unread one
+    for (let chapter of chapters) {
+        // Check if the chapter is unread by checking for the "read" class absence
+        if (!chapter.classList.contains("read")) {
+            // Scroll to the first unread chapter
+            chapter.scrollIntoView({ behavior: "smooth", block: "center" });
+            
+            // Optionally, you could open the chapter link if needed
+            const chapterLink = chapter.querySelector("a");
+            if (chapterLink) {
+                window.location.href = chapterLink.href;
+            }
+            
+            foundUnread = true;
+            break;
+        }
+    }
+
+    if (!foundUnread) {
+        alert("All chapters are marked as read.");
+    }
+});
+
 
     </script>
 </body>

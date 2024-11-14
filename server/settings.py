@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
+import google.generativeai as genai
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,10 +27,21 @@ SECRET_KEY = 'django-insecure-t&j%++zv36&0y8ojv3mz(@&#@%8g$w_b@2-mmiywzw+zv9n&q3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    'https://radiation-flashers-houston-toolbox.trycloudflare.com/',
+]
+
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # Replace with your SMTP server
+EMAIL_PORT = 587  # Or 465 for SSL
+EMAIL_USE_TLS = True  # Or EMAIL_USE_SSL for SSL
+EMAIL_HOST_USER = 'suganthchandran07@gmail.com'
+EMAIL_HOST_PASSWORD = 'mekv vmsd ltbj gvqs'
 
 # Application definition
 
@@ -45,6 +58,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -58,7 +72,8 @@ ROOT_URLCONF = 'server.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        # 'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -87,6 +102,9 @@ DATABASES = {
         'PORT': '3306'
     }
 }
+
+
+genai.configure(api_key="AIzaSyDkdvsI38ocQH_vLPGwRBBoUlUdE8nkk0k")
 
 
 # Password validation
