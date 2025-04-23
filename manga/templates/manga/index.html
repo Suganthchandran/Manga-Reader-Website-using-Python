@@ -347,54 +347,80 @@
                 color: white;
             }
         }
+
         #chatbot-button {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background-color: #007bff;
             color: white;
             border: none;
             padding: 12px;
             border-radius: 50%;
             cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             font-size: 24px;
         }
 
-        /* Chatbot container */
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 99;
+            display: none;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 5px;
+            right: 12px;
+            background: transparent;
+            border: none;
+            font-size: 18px;
+            color: #fff;
+            cursor: pointer;
+        }
+
         #chatbot-container {
             position: fixed;
             bottom: 80px;
             z-index: 100;
             right: 20px;
-            width: 300px;
-            height: 400px;
-            border: 1px solid #ddd;
+            width: 400px;
+            height: 600px;
+            border: 1px solid #424242;
             border-radius: 8px;
-            background-color: #ffffff;
+            background-color: #000000;
             display: none;
             flex-direction: column;
             padding: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
         }
+
+
 
         #chatbot-container.active {
             display: flex;
+            justify-content: end;
+            align-items: center;
         }
 
-        #chat-log {
-            flex: 1;
-            overflow-y: auto;
-            margin-bottom: 10px;
-        }
+
 
         .chat-input-container {
             display: flex;
-            gap: 5px;
+            justify-content: end;
+            align-items: end;
+            gap: 10px;
+            margin-right: 5px;
+            margin-bottom: 10px;
         }
 
         .chat-input {
-            flex: 1;
+            width: 250px;
             padding: 8px;
             border: 1px solid #ddd;
             border-radius: 4px;
@@ -409,19 +435,56 @@
             border-radius: 4px;
         }
 
-        .user-message {
-            background-color: #d1e7dd;
+        #chat-log {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            overflow-y: auto;
+            height: 100%;
+            padding: 25px 15px;
+        }
+
+
+        .message-container {
+            display: flex;
+            align-items: flex-start;
             margin-bottom: 10px;
-            padding: 8px;
-            border-radius: 4px;
+        }
+
+        .user-message {
+            justify-content: flex-end;
             text-align: right;
         }
 
+
         .bot-message {
-            background-color: #f8d7da;
-            margin-bottom: 10px;
-            padding: 8px;
-            border-radius: 4px;
+            justify-content: flex-start;
+        }
+
+        .message-content {
+            padding: 8px 12px;
+            display: inline-block;
+        }
+
+        .chatbot-avatar {
+            width: 30px;
+            height: 30px;
+            margin-right: 5px;
+            border-radius: 50%;
+        }
+
+        .typing-indicator .message-content {
+            font-style: italic;
+            color: #888;
+        }
+
+
+        .chatbot-image {
+            width: 60px;
+            height: 65px;
+            object-fit: cover;
+            border: 1px solid black;
+            border-radius: 50px;
         }
     </style>
 </head>
@@ -470,19 +533,16 @@
             </li>
             {% endfor %}
         </ul>
-        <!-- <div id="chatbox">
-            <div id="chat-output"></div>
-            <form method="POST" action="/chatbot/">
-                {% csrf_token %}
-                <input type="text" id="chat-input" placeholder="Ask something..." />
-                <button type="submit">Send</button>
-            </form>
-            
-        </div> -->
         {% include 'manga/inc/footer.html' %}
 
-        <div id="chatbot-button" onclick="toggleChatbot()">💬</div>
+        <div id="chatbot-button" onclick="toggleChatbot()">
+            <img src="{% static 'Images/chatbot.jpg' %}" alt="Footer Image" class="chatbot-image">
+        </div>
+        <div id="overlay"></div>
         <div id="chatbot-container">
+            <button class="close-button" onclick="toggleChatbot()">
+                <img src="{% static 'Images/cross.png' %}" alt="Footer Image" class="chatbot-image">
+            </button>
             <div id="chat-log"></div>
             <div class="chat-input-container">
                 <input type="text" id="chat-input" class="chat-input" placeholder="Type your message..." />
@@ -490,14 +550,23 @@
             </div>
         </div>
 
+
     </div>
 
 
     <script>
 
-function toggleChatbot() {
+        function toggleChatbot() {
             const chatbotContainer = document.getElementById('chatbot-container');
-            chatbotContainer.classList.toggle('active');
+            const overlay = document.getElementById('overlay');
+
+            if (chatbotContainer.classList.toggle('active')) {
+                overlay.style.display = 'block';
+                chatbotContainer.style.display = 'flex';
+            } else {
+                overlay.style.display = 'none';
+                chatbotContainer.style.display = 'none';
+            }
         }
 
         function sendMessage() {
@@ -507,24 +576,23 @@ function toggleChatbot() {
 
             if (message === '') return;
 
-            // Display user's message in the chat log
             const userMessageDiv = document.createElement('div');
-            userMessageDiv.className = 'user-message';
-            userMessageDiv.textContent = message;
+            userMessageDiv.className = 'message-container user-message';
+            userMessageDiv.innerHTML = `<span class="message-content">${message}</span>`;
             chatLog.appendChild(userMessageDiv);
             inputField.value = '';
 
-            // Scroll to the bottom of the chat log
             chatLog.scrollTop = chatLog.scrollHeight;
 
-            // Add a loader div for the bot's response
             const loaderDiv = document.createElement('div');
-            loaderDiv.className = 'bot-message';
-            loaderDiv.textContent = 'Typing...';
+            loaderDiv.className = 'message-container bot-message typing-indicator';
+            loaderDiv.innerHTML = `
+        <img src="{% static 'Images/chatbot_zoro.png' %}" alt="Chatbot" class="chatbot-avatar">
+        <span class="message-content">Typing...</span>
+    `;
             loaderDiv.id = 'loader';
             chatLog.appendChild(loaderDiv);
 
-            // Send message to the backend
             fetch('/chatbot/', {
                 method: 'POST',
                 headers: {
@@ -533,32 +601,31 @@ function toggleChatbot() {
                 },
                 body: JSON.stringify({ message: message })
             })
-            .then(response => response.json())
-            .then(data => {
-                // Remove the loader div
-                const loader = document.getElementById('loader');
-                if (loader) {
-                    chatLog.removeChild(loader);
-                }
+                .then(response => response.json())
+                .then(data => {
+                    const loader = document.getElementById('loader');
+                    if (loader) {
+                        chatLog.removeChild(loader);
+                    }
 
-                // Display bot's response in the chat log
-                const botMessageDiv = document.createElement('div');
-                botMessageDiv.className = 'bot-message';
-                botMessageDiv.textContent = data.response;
-                chatLog.appendChild(botMessageDiv);
+                    const botMessageDiv = document.createElement('div');
+                    botMessageDiv.className = 'message-container bot-message';
+                    botMessageDiv.innerHTML = `
+            <img src="{% static 'Images/chatbot_zoro.png' %}" alt="Chatbot" class="chatbot-avatar">
+            <span class="message-content">${data.response}</span>
+        `;
+                    chatLog.appendChild(botMessageDiv);
 
-                // Scroll to the bottom of the chat log
-                chatLog.scrollTop = chatLog.scrollHeight;
-            })
-            .catch(error => {
-                console.error('Error:', error);
+                    chatLog.scrollTop = chatLog.scrollHeight;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
 
-                // Remove the loader in case of an error
-                const loader = document.getElementById('loader');
-                if (loader) {
-                    chatLog.removeChild(loader);
-                }
-            });
+                    const loader = document.getElementById('loader');
+                    if (loader) {
+                        chatLog.removeChild(loader);
+                    }
+                });
         }
 
         function getCookie(name) {
@@ -587,19 +654,19 @@ function toggleChatbot() {
         }
 
         function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
             }
+            return cookieValue;
         }
-    }
-    return cookieValue;
-}
 
     </script>
 </body>
